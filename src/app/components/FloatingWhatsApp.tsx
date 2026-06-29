@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { MessageCircle } from "lucide-react";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 export function FloatingWhatsApp() {
   const phone = "923107683064";
@@ -11,10 +11,10 @@ export function FloatingWhatsApp() {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 left-6 z-50 flex items-center justify-center rounded-full"
+      className="fixed bottom-6 right-6 z-50 flex items-center justify-center rounded-full"
       style={{
-        width: 56,
-        height: 56,
+        width: 60,
+        height: 60,
         background: "#25D366",
         boxShadow: "0 0 0 0 rgba(37,211,102,0.4)",
         textDecoration: "none",
@@ -31,7 +31,7 @@ export function FloatingWhatsApp() {
       whileTap={{ scale: 0.95 }}
       aria-label="Chat on WhatsApp"
     >
-      <MessageCircle size={26} color="#fff" fill="#fff" />
+      <WhatsAppIcon style={{ color: "#fff", fontSize: 32 }} />
     </motion.a>
   );
 }
