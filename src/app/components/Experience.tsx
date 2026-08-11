@@ -1,27 +1,67 @@
 import { SectionWrapper, SectionHeading } from "./SectionWrapper";
 import { motion } from "motion/react";
-import { BookOpen, Layout, FileText } from "lucide-react";
+import { Brain, Layout, FileText, BadgeCheck } from "lucide-react";
 
-interface Props { theme: "light" | "dark" }
+interface Props {
+  theme: "light" | "dark";
+}
 
 const expertiseAreas = [
   {
-    role: "Lecturer",
-    icon: BookOpen,
+    role: "Language and Clinical Track",
+    icon: Brain,
     color: "#7c3aed",
-    items: ["Teaching", "Student Guidance", "Academic Mentorship", "Classroom Leadership", "Curriculum Delivery", "Assessment Design"],
+    timeframe: "Primary Role",
+    items: [
+      "Neurolinguistic awareness",
+      "Language-focused analysis",
+      "Clinical reasoning",
+      "Communication support",
+      "Patient interaction",
+      "Observation and precision",
+    ],
   },
   {
-    role: "Office Coordinator",
+    role: "Office Administration and Management",
     icon: Layout,
     color: "#b8860b",
-    items: ["Scheduling", "Administration", "Workflow Management", "Record Keeping", "Meeting Coordination", "Resource Planning"],
+    timeframe: "Company Sumsols Technologies",
+    items: [
+      "14 April 2026 - 18 July 2026",
+      "Scheduling and coordination",
+      "Record keeping",
+      "Workflow organization",
+      "Communication support",
+      "Operational assistance",
+    ],
   },
   {
-    role: "Administrative Professional",
-    icon: FileText,
+    role: "Research & Documentation",
+    icon: BadgeCheck,
     color: "#2563eb",
-    items: ["Communication", "Operations", "Documentation", "Team Coordination", "Correspondence Handling", "Stakeholder Relations"],
+    timeframe: "Supporting Strength",
+    items: [
+      "Research design",
+      "Evidence review",
+      "Scientific writing",
+      "Academic reporting",
+      "Case review",
+      "Documentation",
+    ],
+  },
+  {
+    role: "Secondary Support Professional",
+    icon: FileText,
+    color: "#dc2626",
+    timeframe: "Secondary Strength",
+    items: [
+      "Task management",
+      "Confidentiality",
+      "Team coordination",
+      "Reporting",
+      "Stakeholder support",
+      "Documentation",
+    ],
   },
 ];
 
@@ -29,17 +69,19 @@ export function Experience({ theme }: Props) {
   const dark = theme === "dark";
 
   return (
-    <section
-      id="experience"
-      className="py-24 px-6"
-      style={{ background: dark ? "#0a0820" : "#f5f0e8" }}
-    >
+    <section id="experience" className="py-24 px-6" style={{ background: dark ? "#0a0820" : "#f5f0e8" }}>
       <div className="max-w-5xl mx-auto">
         <SectionWrapper>
-          <SectionHeading label="08 — Professional Experience" title="Experience & Expertise" theme={theme} />
+          <SectionHeading label="08 - Experience & Expertise" title="Experience & Expertise" theme={theme} />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {expertiseAreas.map(({ role, icon: Icon, color, items }, i) => (
+          <div className="mb-6 rounded-2xl p-5" style={{ background: dark ? "rgba(22,19,58,0.72)" : "rgba(255,255,255,0.82)", border: `1px solid ${dark ? "rgba(168,159,232,0.14)" : "rgba(45,42,110,0.1)"}` }}>
+            <p style={{ fontFamily: "Inter, sans-serif", fontSize: "0.9rem", color: dark ? "#c8c2e0" : "#3d3860", lineHeight: 1.7 }}>
+              Sumsols experience is shown clearly as a dedicated card, while research and support strengths stay visible without taking over the main profile.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+            {expertiseAreas.map(({ role, icon: Icon, color, items, timeframe }, i) => (
               <motion.div
                 key={role}
                 className="rounded-2xl p-6"
@@ -60,6 +102,18 @@ export function Experience({ theme }: Props) {
                   <Icon size={24} style={{ color }} />
                 </div>
 
+                <p
+                  style={{
+                    fontFamily: "DM Mono, monospace",
+                    fontSize: "0.66rem",
+                    color: color,
+                    letterSpacing: "0.14em",
+                    marginBottom: "0.5rem",
+                  }}
+                >
+                  {timeframe}
+                </p>
+
                 <h3
                   style={{
                     fontFamily: "Playfair Display, serif",
@@ -75,10 +129,7 @@ export function Experience({ theme }: Props) {
                 <div className="space-y-2">
                   {items.map((item) => (
                     <div key={item} className="flex items-center gap-2.5">
-                      <div
-                        className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                        style={{ background: color }}
-                      />
+                      <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: color }} />
                       <span style={{ fontFamily: "Inter, sans-serif", fontSize: "0.85rem", color: dark ? "#c8c2e0" : "#3d3860" }}>
                         {item}
                       </span>

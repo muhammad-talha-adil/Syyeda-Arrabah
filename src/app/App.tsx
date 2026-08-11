@@ -15,8 +15,10 @@ import { PersonalQR } from "./components/PersonalQR";
 import { Contact } from "./components/Contact";
 import { FloatingWhatsApp } from "./components/FloatingWhatsApp";
 import { Footer } from "./components/Footer";
+import { DocumentEditor } from "./components/DocumentEditor";
 
 type Theme = "light" | "dark";
+type EditorKind = "resume" | "cover-letter";
 
 function getInitialTheme(): Theme {
   const saved = localStorage.getItem("portfolio-theme") as Theme | null;
@@ -25,11 +27,32 @@ function getInitialTheme(): Theme {
 }
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
+  const initialEditorKind = (() => {
+    const params = new URLSearchParams(window.location.search);
+    const editor = params.get("editor");
+    return editor === "resume" || editor === "cover-letter" ? editor : null;
+  })();
+
+  const [loading, setLoading] = useState(!initialEditorKind);
   const [theme, setTheme] = useState<Theme>("dark");
+  const [editorKind, setEditorKind] = useState<EditorKind | null>(initialEditorKind);
 
   useEffect(() => {
     setTheme(getInitialTheme());
+  }, []);
+
+  useEffect(() => {
+    const syncFromUrl = () => {
+      const params = new URLSearchParams(window.location.search);
+      const editor = params.get("editor");
+      const nextEditor = editor === "resume" || editor === "cover-letter" ? editor : null;
+      setEditorKind(nextEditor);
+      setLoading(!nextEditor);
+    };
+
+    syncFromUrl();
+    window.addEventListener("popstate", syncFromUrl);
+    return () => window.removeEventListener("popstate", syncFromUrl);
   }, []);
 
   useEffect(() => {
@@ -48,9 +71,9 @@ export default function App() {
 
   return (
     <>
-      {loading && <Loader onComplete={handleLoaderComplete} />}
+      {loading && !editorKind && <Loader onComplete={handleLoaderComplete} />}
 
-      {!loading && (
+      {!loading && !editorKind && (
         <div
           style={{
             fontFamily: "Inter, sans-serif",
@@ -80,6 +103,8 @@ export default function App() {
           <FloatingWhatsApp />
         </div>
       )}
+
+      {!loading && editorKind && <DocumentEditor initialKind={editorKind} theme={theme} />}
     </>
   );
 }

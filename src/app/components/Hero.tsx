@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { Mail, FileText, ChevronDown } from "lucide-react";
+import { Mail, FileText, ChevronDown, Download } from "lucide-react";
 
 const titles = [
   "Lecturer",
@@ -42,6 +42,10 @@ export function Hero({ theme }: HeroProps) {
   }, [displayed, typing, titleIdx]);
 
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const openEditor = (kind: "resume" | "cover-letter") => {
+    const url = `${window.location.origin}${window.location.pathname}?editor=${kind}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
 
   const dark = theme === "dark";
 
@@ -150,10 +154,10 @@ export function Hero({ theme }: HeroProps) {
             "Bridging Education, Research, Administration, and Human Development."
           </p>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:max-w-[760px]">
             <motion.button
               onClick={() => scrollTo("contact")}
-              className="flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-200"
+              className="flex w-full items-center justify-center gap-2 px-6 py-3 rounded-full transition-all duration-200 min-h-[52px]"
               style={{
                 background: dark ? "#d4a017" : "#2d2a6e",
                 color: dark ? "#0e0c24" : "#ffffff",
@@ -170,7 +174,7 @@ export function Hero({ theme }: HeroProps) {
             </motion.button>
             <motion.button
               onClick={() => scrollTo("education")}
-              className="flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-200"
+              className="flex w-full items-center justify-center gap-2 px-6 py-3 rounded-full transition-all duration-200 min-h-[52px]"
               style={{
                 background: "transparent",
                 color: dark ? "#a89fe8" : "#2d2a6e",
@@ -184,6 +188,42 @@ export function Hero({ theme }: HeroProps) {
             >
               <FileText size={15} />
               View Qualifications
+            </motion.button>
+            <motion.button
+              onClick={() => openEditor("cover-letter")}
+              className="flex w-full items-center justify-center gap-2 px-6 py-3 rounded-full transition-all duration-200 min-h-[52px]"
+              style={{
+                background: dark ? "rgba(168,159,232,0.12)" : "rgba(45,42,110,0.08)",
+                color: dark ? "#f0ece3" : "#2d2a6e",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: 600,
+                fontSize: "0.875rem",
+                border: `1.5px solid ${dark ? "rgba(168,159,232,0.24)" : "rgba(45,42,110,0.18)"}`,
+                cursor: "pointer",
+              }}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              <Download size={15} />
+              Open Cover Letter Preview
+            </motion.button>
+            <motion.button
+              onClick={() => openEditor("resume")}
+              className="flex w-full items-center justify-center gap-2 px-6 py-3 rounded-full transition-all duration-200 min-h-[52px]"
+              style={{
+                background: dark ? "#d4a017" : "#2d2a6e",
+                color: dark ? "#0e0c24" : "#ffffff",
+                fontFamily: "Inter, sans-serif",
+                fontWeight: 700,
+                fontSize: "0.875rem",
+                border: "none",
+                cursor: "pointer",
+              }}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              <Download size={15} />
+              Open Resume Preview
             </motion.button>
           </div>
         </motion.div>
